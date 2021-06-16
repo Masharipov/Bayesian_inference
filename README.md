@@ -52,7 +52,7 @@ LPOs and PPMs are created for
 
 =========================================================================
 
-**ROPE maps**
+**ROPE maps (*bayinf_rope_maps.m*)**
 
 1) Select *SPM.mat* file for one-sample or two-sample model.
 2) Select contrast.  
@@ -65,7 +65,7 @@ For positive/negative or “(de)activated” voxels, the ROPE map contains maxim
 
 =========================================================================
 
-**Visualisation**
+**Visualisation (*bayinf_vis.m*)**
 
 *Visualisation* produces a window containing three orthogonal brain images, as well as various buttons for interacting with these images:
 
