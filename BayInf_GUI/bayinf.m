@@ -78,14 +78,14 @@ switch(option)
     case 'bpi'
         [pos_file_path, null_file_path, neg_file_path, mask_path] = bayinf_bpi;
 		if ~isempty(mask_path)
-            bayinf_vis('start_pos', pos_file_path, 'start_null', null_file_path, 'start_neg', neg_file_path);
+            bayinf_vis('start_struct',mask_path,'start_pos', pos_file_path, 'start_null', null_file_path, 'start_neg', neg_file_path);
         end               
     case 'vis'
         bayinf_vis();    
     case 'rope'
         [pos_file_path, null_file_path, neg_file_path, mask_path, pos_max, null_max, neg_max] = bayinf_rope_maps;
 		if ~isempty(mask_path)
-            bayinf_vis('start_pos', pos_file_path, 'start_null', null_file_path, 'start_neg', neg_file_path, ...
+            bayinf_vis('start_struct',mask_path,'start_pos', pos_file_path, 'start_null', null_file_path, 'start_neg', neg_file_path, ...
             'start_pos_thresh', [0 pos_max], 'start_null_thresh', [0 null_max], 'start_neg_thresh', [0 neg_max]);
         end
     case 'help'
