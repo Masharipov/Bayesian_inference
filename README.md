@@ -1,5 +1,7 @@
 # Bayesian_inference
 
+<p align="center"><img width="60%" src="illustrations/bayinf.png"/></p>
+
 =========================================================================
 
 Before performing Bayesian inference, it is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC)
