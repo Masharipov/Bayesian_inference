@@ -1,6 +1,6 @@
 # Bayesian_inference
 
-<p align="center"><img width="60%" src="illustrations/bayinf.png"/></p>
+<p align="center"><img width="100%" src="illustrations/bayinf.png"/></p>
 
 =========================================================================
 
