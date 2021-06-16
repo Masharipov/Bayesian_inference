@@ -4,8 +4,7 @@
 
 =========================================================================
 
-Before performing Bayesian inference, it is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC)
-See 'Scale_raw_betas_to_PSC.m' script
+
 
 =========================================================================
 
@@ -15,6 +14,8 @@ Before running these scripts, use SPM12 (v6906) to:
 1) Create GLM for a one-sample or two-sample test.
 2) Estimate model using the *Classical* method.
 3) Estimate model using the *Bayesian 2nd-level* method.
+
+It is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC) before model estimation (for example, see 'scale_raw_betas_to_PSC.m') .
 
 **How to Use:**
 
@@ -36,7 +37,7 @@ Before running these scripts, use SPM12 (v6906) to:
 4) Choose effect size (ES) threshold γ, which defines the region of practical equivalence (ROPE)
 4.1) The γ(Dicemax) threshold can be used when there are significant voxels revealed by classical NHST with FWE-correction of p<0.05 (_optionally_)
 _γ(Dicemax) threshold ensures maximum similarity of the activation patterns revealed by classical NHST (pFWE<0.05) and BPI._
-4.2) You can choose any ES threhold in PSC values (PSC corresponding to one prior SD of the contrast is offered by default)(_recommended_)
+4.2) The user can choose any ES threhold in PSC values (PSC corresponding to one prior SD of the contrast is offered by default)(_recommended_)
 
 The output files will be created in the same folder where the SPM.mat file is stored.
 The output files will be stored in 'ROPE-only' or 'HDI-ROPE' folder.
