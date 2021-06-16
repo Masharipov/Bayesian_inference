@@ -29,7 +29,7 @@ It is recommended to scale linear contrasts of beta-values (θ = cB) to percent 
 
 =======================================================================
 
-**Bayesian parameter inference *(bayinf_bpi.m*)**
+**Bayesian parameter inference (*bayinf_bpi.m*)**
 
 1) Select *SPM.mat* file for one-sample or two-sample model.
 2) Select contrast.  
