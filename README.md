@@ -17,7 +17,7 @@ Before running these scripts, use SPM12 (v6906) to:
 
 It is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC) before model estimation (for example, see 'scale_raw_betas_to_PSC.m') .
 
-**How to Use:**
+**How to Use**
 
 1) Download the *BayInf_GUI* folder and add it to the MATLAB path.
 2) Run the *bayinf.m* script for the GUI to appear.
