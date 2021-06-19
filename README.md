@@ -37,7 +37,7 @@ It is recommended to scale linear contrasts of beta-values (θ = cB) to percent 
 4) Choose effect size (ES) threshold γ, which defines the region of practical equivalence (ROPE)
 4.1) The γ(Dicemax) threshold can be used when there are significant voxels revealed by classical NHST with FWE-correction of p<0.05 (_optionally_)
 _γ(Dicemax) threshold ensures maximum similarity of the activation patterns revealed by classical NHST (pFWE<0.05) and BPI._
-4.2) The user can choose any ES threhold in PSC values (PSC corresponding to one prior SD of the contrast is offered by default)(_recommended_)
+4.2) The user can choose any ES threshold in PSC values (PSC corresponding to one prior SD of the contrast is offered by default)(_recommended_)
 
 The output files will be created in the same folder where the SPM.mat file is stored.
 The output files will be stored in 'ROPE-only' or 'HDI-ROPE' folder.
