@@ -33,7 +33,8 @@ function bayinf(varargin)
 clear
 close all
 
-handles.fig = figure('units','norm','position',[.1875,.5,.15,.35],'name','BayInf','menubar','none','numbertitle','off','color','w');
+scrsz=get(0,'ScreenSize');
+handles.fig = figure('position',[(scrsz(3)*0.2) (scrsz(4)*0.5) 250 320+22],'name','BayInf','menubar','none','numbertitle','off','color','w');
 handles.bpi = uicontrol('units','norm','position',[.05,.77, .9,.165],'style','pushbutton','string','BPI','fontsize',12,'callback',{@bayinf_gui,'bpi'});
 handles.rop = uicontrol('units','norm','position',[.05,.59, .9,.165],'style','pushbutton','string','ROPE Maps','fontsize',12,'callback',{@bayinf_gui,'rope'});
 handles.vis = uicontrol('units','norm','position',[.05,.41, .9,.165],'style','pushbutton','string','Visualise','fontsize',12,'callback',{@bayinf_gui,'vis'});
@@ -86,7 +87,7 @@ switch(option)
         [pos_file_path, null_file_path, neg_file_path, mask_path, pos_max, null_max, neg_max] = bayinf_rope_maps;
 		if ~isempty(mask_path)
             bayinf_vis('start_struct',mask_path,'start_pos', pos_file_path, 'start_null', null_file_path, 'start_neg', neg_file_path, ...
-            'start_pos_thresh', [0 pos_max], 'start_null_thresh', [0 null_max], 'start_neg_thresh', [0 neg_max]);
+            'start_pos_thresh', [0 0.5*pos_max], 'start_null_thresh', [0 0.5*null_max], 'start_neg_thresh', [0 0.5*neg_max]);
         end
     case 'help'
 		open('manual.pdf')

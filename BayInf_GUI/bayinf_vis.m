@@ -144,7 +144,7 @@ switch(option)
         if isempty(struct_path),
             warndlg('No working image.');
         else
-            handles.sli_fig=figure('units','norm','position',[.425,.45,.15,.1],'name','Create Slice','menubar','none','numbertitle','off','color','w');
+            handles.sli_fig=figure('units','norm','position',[.425,.45,.17,.1],'name','Create Slice','menubar','none','numbertitle','off','color','w');
             handles.sli_pos=uicontrol('units','norm','position',[.025,.75625, .4675,.21875],'style','text','string','Positions');
             handles.sli_pos_edit=uicontrol('units','norm','position',[.4925,.75625, .4675,.21875],'style','edit','string','52 32 12 -16 -25','callback',{@numeric_edit});
 
@@ -154,7 +154,7 @@ switch(option)
             handles.sli_rws=uicontrol('units','norm','position',[.025,.26875, .4675,.21875],'style','text','string','Rows');
             handles.sli_rws_edit=uicontrol('units','norm','position',[.4925,.26875, .4675,.21875],'style','edit','string','1','callback',{@numeric_edit});
 
-            handles.sli_res=uicontrol('units','norm','position',[.025,.025, .95,.21875],'style','pushbutton','string','Create','callback',{@sli_gui});
+            handles.sli_res=uicontrol('units','norm','position',[.025,.025, .94,.21875],'style','pushbutton','string','Create','callback',{@sli_gui});
         end     
 end
 return
@@ -186,7 +186,7 @@ true_columns = min(true_columns, length(sli_pos_numbers));
 true_rows = ceil(length(sli_pos_numbers) / true_columns);
 
 %size of individual cell
-[zero_slice] = create_slice(struct_path, sli_direction, 50, 0, false, false);
+[zero_slice] = create_slice(struct_path, sli_direction, 50, 0, 0, false, false);
 
 sli_width = size(zero_slice, 1);
 sli_height = size(zero_slice, 2);
@@ -479,7 +479,12 @@ if ~isempty(struct_path)
     struct_hdr = spm_vol(struct_path);
     struct_hdr = struct_hdr(1);
     handles.vis_result = spm_orthviews('image',struct_hdr, [0.5 -2 .5 5.15], handles.vis_fig);        
+    pos_img = zeros([65 77 49]);
+    null_img = zeros([65 77 49]);
+    neg_img = zeros([65 77 49]);
 
+    
+    
     if ~isempty(pos_path)
         pos_background = thresh_background(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),'\background_red.nii'));	%red		
         [pos_img, pos_overlay] = thresh(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),'\overlay_red.nii'));	%red		
@@ -555,28 +560,73 @@ img_matrix= img_vol.mat;
 dist = round(vox_dist * img_matrix(dim, dim));
 return
 
-function [img_slice, img_size, img_vis] = create_slice(path, dim, dist, crop, vis, to_image)
+function [img_slice, img_size, img_center, img_vis] = create_slice(path, dim, dist, crop_center, crop_size, vis, to_image)
 
 
 img_vol = spm_vol(path);	
-img_img = spm_read_vols(img_vol);
+initial_img = spm_read_vols(img_vol);
+
+vox_center = mm2vox([0 0 0], path);
 
 img_matrix= img_vol.mat;
 img_matrix(1:3,4) = 0;
 
 
-img_affine = affine3d(img_matrix);
-img_img(isnan(img_img)) = 0;
+img_center = round([vox_center(1) * abs(img_matrix(1,1)) vox_center(2) * abs(img_matrix(2,2)) vox_center(3) * abs(img_matrix(3,3))]);
 
-img_img = imwarp(img_img, img_affine, 'nearest');
-img_size = size(img_img);
-img_vis = img_img;
-if crop ~= 0
-   img_start = round((img_size - crop) / 2,0);
-   if img_start(1) ~= 0;
-     img_img = img_img(img_start(1)+1:img_start(1) + crop(1),img_start(2)+1:img_start(2) + crop(2),max(1, img_start(3)+1 - round((13/19) * img_start(3))):img_start(3) + crop(3) - round((13/19) * img_start(3)));
-   end
+img_affine = affine3d(img_matrix);
+initial_img(isnan(initial_img)) = 0;
+
+initial_img = imwarp(initial_img, img_affine, 'nearest');
+img_size = size(initial_img);
+img_vis = initial_img;
+
+if crop_size == 0
+   crop_size = img_size; 
 end
+
+
+if img_size > crop_size
+   img_start = img_center - crop_center;
+   initial_img = initial_img(img_start(1):img_start(1) - 1 + crop_size(1),img_start(2):img_start(2) - 1 + crop_size(2),img_start(3):img_start(3) - 1 + crop_size(3));
+   
+   %disp(img_start);
+   %disp(crop_size);
+   %disp(img_size);
+   
+   if isequal(crop_size, size(initial_img))
+        %disp('keeping the same')
+        img_img = initial_img;
+   else
+        %disp('expanding')
+        img_img = zeros(crop_size);
+        img_img(1:size(initial_img,1),1:size(initial_img,2),1:size(initial_img,3)) = initial_img;
+    end
+elseif img_size < crop_size
+   img_img = zeros(crop_size);
+   img_start = crop_center - img_center;
+   %disp(img_start);
+   %disp(crop_size);
+   %disp(img_size);
+   img_img(img_start(1):img_start(1) - 1 + img_size(1),img_start(2):img_start(2) - 1 + img_size(2),img_start(3):img_start(3) - 1 + img_size(3)) = initial_img;
+elseif isequal(img_size, crop_size)
+   img_img = initial_img;
+else
+   %disp('cocc');
+   %disp(crop_size);
+   %disp(img_size);
+   img_img = zeros(crop_size);
+   img_start = img_center - crop_center;
+   %disp(img_start);
+   shrunk_size = [min(crop_size(1), img_size(1)), min(crop_size(2), img_size(3)), min(crop_size(3), img_size(3))];
+   %disp(shrunk_size);
+   initial_img = initial_img(1:shrunk_size(1), 1:shrunk_size(2), 1:shrunk_size(3));
+   %disp(size(initial_img));
+   img_img(img_start(1):img_start(1) - 1 + shrunk_size(1),img_start(2):img_start(2) - 1 + shrunk_size(2),img_start(3):img_start(3) - 1 + shrunk_size(3)) = initial_img;
+
+end
+
+
 if img_matrix(1,1) < 0
     img_img = flip(img_img, 1);
     img_img = flip(img_img, 2);
@@ -589,7 +639,7 @@ if img_matrix(3,3) < 0
     img_img = flip(img_img, 1);
     img_img = flip(img_img, 3);
 end
-
+dist = abs(dist);
 img_pos = size(img_img,dim);
 switch dim;
 case 1
@@ -622,8 +672,11 @@ global pos_thr
 global null_thr
 global neg_thr
 
+
+%function [img_slice, img_size, img_center, img_vis] = create_slice(path, dim, dist, center, new_size, vis, to_image)
+
 dist = calculate_dist(path, ori_dist, dim);
-[start_slice, start_size] = create_slice(path, dim, dist, 0, vis, true);
+[start_slice, start_size, start_center, ~] = create_slice(path, dim, dist, 0, 0, vis, true);
 
 red_sl = start_slice;
 blue_sl = start_slice;
@@ -633,20 +686,21 @@ pos_max = max(0, pos_int);
 null_max = max(0, null_int);
 neg_max = max(0, neg_int);
 
+%disp(mm2vox([0 0 0], path))
 if red ~= 0
-    [red_slice, ~] = create_slice(red, dim, dist, start_size, vis, false);
+    [red_slice, ~] = create_slice(red, dim, dist, start_center, start_size, vis, false);
     red_sl(red_slice>0) = 255;
     green_sl(red_slice>0) = min(255, ((red_slice(red_slice>0) - pos_thr) / (pos_max - pos_thr)) * 255);
     blue_sl(red_slice>0) = 0;
 end
 if green ~= 0
-    [green_slice, ~] = create_slice(green, dim, dist, start_size, vis, false);
+    [green_slice, ~] = create_slice(green, dim, dist, start_center, start_size, vis, false);
     red_sl(green_slice>0) = min(255, ((green_slice(green_slice>0) - null_thr) / (null_max - null_thr)) * 128);
     green_sl(green_slice>0) = 128 + min(127, ((green_slice(green_slice>0) - null_thr) / (null_max - null_thr)) * 127);
     blue_sl(green_slice>0) = 0;
 end
 if blue ~= 0
-    [blue_slice, ~] = create_slice(blue, dim, dist, start_size, vis, false);	
+    [blue_slice, ~] = create_slice(blue, dim, dist, start_center, start_size, vis, false);	
     green_sl(blue_slice>0) = min(255, ((blue_slice(blue_slice>0) - neg_thr) / (neg_max - neg_thr)) * 255); 
     red_sl(blue_slice>0) = 0;
     blue_sl(blue_slice>0) = 255;

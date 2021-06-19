@@ -62,6 +62,13 @@ if nargin > 1
 else
     % Load SPM.mat
     [spmmatfile] = spm_select(1,'^SPM\.mat$','Select SPM.mat');
+    if isempty(spmmatfile)
+        LPO_pos = '';
+        LPO_null = '';
+        LPO_neg = '';
+        Bin_Mask = '';
+        return
+    end       
     load(spmmatfile);
     % Set path
     path = SPM.swd;

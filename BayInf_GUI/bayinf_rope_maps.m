@@ -30,6 +30,16 @@ if nargin > 1
 else
     % Load SPM.mat
     [spmmatfile] = spm_select(1,'^SPM\.mat$','Select SPM.mat');
+    if isempty(spmmatfile)
+        ROPE_map_pos = '';
+        ROPE_map_null = '';
+        ROPE_map_neg = '';
+        Bin_Mask = '';
+        Pos_Max = '';
+        Null_Max = '';
+        Neg_Max = '';
+        return
+    end    
     load(spmmatfile);
     % Set path
     path = SPM.swd;
@@ -122,7 +132,7 @@ switch rule
             waitbar(i/length(cB),f,'Step 3: Computing ROPE maps')
         end
         delete(f)
-        rule_name = 'ROPE_only'
+        rule_name = 'ROPE_only';
     case 2 %HDI+ROPE
         HDImax = spm_invNcdf(0.975,cB,VcB);
         HDImin = spm_invNcdf(0.025,cB,VcB);
