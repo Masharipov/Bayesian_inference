@@ -1107,5 +1107,5 @@ end
 
 
 function bayinf_help(varargin)
-open(strcat(fileparts(mfilename('fullpath')),'\manual.pdf'));
+open(strcat(fileparts(mfilename('fullpath')),[filesep 'manual.pdf']));
 

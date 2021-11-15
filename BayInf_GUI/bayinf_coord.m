@@ -25,7 +25,7 @@ XYZmm = XYZmm(2:end-1);
 
 set(handles.vis_mm_edit, 'String', XYZmm);      
 if exist('overlay_red.nii','file') == 2
-    pos_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),'\overlay_red.nii')));
+    pos_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_red.nii'])));
     if any(pos_xyz < 0)
         pos_int = 0;
     else
@@ -40,7 +40,7 @@ end
 set(handles.vis_pos_edit, 'String', pos_int);  
 
 if exist('overlay_green.nii','file') == 2
-    null_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),'\overlay_green.nii')));
+    null_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_green.nii'])));
     if any(null_xyz < 0)
         null_int = 0;
     else
@@ -56,7 +56,7 @@ end
 set(handles.vis_null_edit, 'String', null_int);  
 
 if exist('overlay_blue.nii','file') == 2
-    neg_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),'\overlay_blue.nii')));
+    neg_xyz = round(mm2vox(spm_orthviews('Pos'), strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_blue.nii'])));
 
     if any(neg_xyz < 0)
         neg_int = 0;

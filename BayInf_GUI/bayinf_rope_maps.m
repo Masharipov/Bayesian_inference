@@ -26,10 +26,10 @@ function [ROPE_map_pos, ROPE_map_null, ROPE_map_neg, Bin_Mask, Pos_Max, Null_Max
 tic
 % Set path and Load SPM.mat
 if nargin > 1
-    load([path '\SPM.mat']);
+    load([path filesep 'SPM.mat']);
 else
     % Load SPM.mat
-    [spmmatfile] = spm_select(1,'^SPM\.mat$','Select SPM.mat');
+    [spmmatfile] = spm_select(1,['^SPM' filesep '.mat$'],'Select SPM.mat');
     if isempty(spmmatfile)
         ROPE_map_pos = '';
         ROPE_map_null = '';
@@ -196,7 +196,7 @@ info=struct ('name', [name_1 name_2 name_3],...
 all=[map_pos; map_null; map_neg];
 
 %hdr
-hdr = spm_vol([path '\Cbeta_0001.nii']);
+hdr = spm_vol([path filesep 'Cbeta_0001.nii']);
 
 %mask
 mask = spm_read_vols(hdr);
@@ -207,7 +207,7 @@ iXYZ = cumprod([1,SPM.xVol.DIM(1:2)'])*XYZ - sum(cumprod(SPM.xVol.DIM(1:2)'));
 
 %save images
 for j=1:3
-    hdr.fname = [path '\ROPE_maps\' rule_name '_' info(j).name '.nii'];  
+    hdr.fname = [path filesep 'ROPE_maps' filesep rule_name '_' info(j).name '.nii'];  
     hdr.descrip = [info(j).description];    
     hdr.private.descrip = [info(j).description];
     tmp           = mask;
@@ -216,10 +216,10 @@ for j=1:3
     clear tmp 
 end
 
-ROPE_map_pos =  [path '\ROPE_maps\' rule_name '_01_Positive_effect.nii'];
-ROPE_map_null = [path '\ROPE_maps\' rule_name '_02_Null_effect.nii'];
-ROPE_map_neg =  [path '\ROPE_maps\' rule_name '_03_Negative_effect.nii'];
-Bin_Mask =      [path '\mask.nii'];
+ROPE_map_pos =  [path filesep 'ROPE_maps' filesep rule_name '_01_Positive_effect.nii'];
+ROPE_map_null = [path filesep 'ROPE_maps' filesep rule_name '_02_Null_effect.nii'];
+ROPE_map_neg =  [path filesep 'ROPE_maps' filesep rule_name '_03_Negative_effect.nii'];
+Bin_Mask =      [path filesep 'mask.nii'];
 
 Pos_Max =   max(map_pos);
 Null_Max =  max(map_null);

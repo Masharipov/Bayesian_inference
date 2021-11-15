@@ -58,10 +58,10 @@ function [LPO_pos, LPO_null, LPO_neg, Bin_Mask] = bayinf_bpi(path,c,rule,DiceMax
 tic
 % Set path and Load SPM.mat
 if nargin > 1
-    load([path '\SPM.mat']);
+    load([path filesep 'SPM.mat']);
 else
     % Load SPM.mat
-    [spmmatfile] = spm_select(1,'^SPM\.mat$','Select SPM.mat');
+    [spmmatfile] = spm_select(1,['^SPM' filesep '.mat$'],'Select SPM.mat');
     if isempty(spmmatfile)
         LPO_pos = '';
         LPO_null = '';
@@ -235,7 +235,7 @@ info = struct('name', [name_1 name_2 name_3],...
              'description', [descr_1 descr_2 descr_3]);
 
 %hdr
-hdr = spm_vol([path '\Cbeta_0001.nii']);
+hdr = spm_vol([path filesep 'Cbeta_0001.nii']);
 
 %mask
 mask = spm_read_vols(hdr);
@@ -246,7 +246,7 @@ iXYZ = cumprod([1,SPM.xVol.DIM(1:2)'])*XYZ - sum(cumprod(SPM.xVol.DIM(1:2)'));
 
 %save PostProb
 for j=1:3
-        hdr.fname = [path '\' rule_dir '\PPM' info(j).name '.nii'];
+        hdr.fname = [path filesep rule_dir filesep 'PPM' info(j).name '.nii'];
         hdr.descrip = [info(j).description];    
         hdr.private.descrip = [info(j).description];
         tmp           = mask;
@@ -257,7 +257,7 @@ end
 
 %save LPO
 for j=1:3
-        hdr.fname = [path '\' rule_dir '\LPO' info(j).name '.nii'];
+        hdr.fname = [path filesep rule_dir filesep 'LPO' info(j).name '.nii'];
         hdr.descrip = [info(j).description];    
         hdr.private.descrip = [info(j).description];
         tmp           = mask;
@@ -266,10 +266,10 @@ for j=1:3
         clear tmp         
 end
 
-LPO_pos =  [path '\' rule_dir '\LPO' info(1).name '.nii'];
-LPO_null = [path '\' rule_dir '\LPO' info(2).name '.nii'];
-LPO_neg =  [path '\' rule_dir '\LPO' info(3).name '.nii'];
-Bin_Mask = [path '\mask.nii'];
+LPO_pos =  [path filesep rule_dir filesep 'LPO' info(1).name '.nii'];
+LPO_null = [path filesep rule_dir filesep 'LPO' info(2).name '.nii'];
+LPO_neg =  [path filesep rule_dir filesep 'LPO' info(3).name '.nii'];
+Bin_Mask = [path filesep 'mask.nii'];
 
 time = toc;
 fprintf('===============================\n');

@@ -72,7 +72,7 @@ for pair = reshape(varargin,2,[]) % pair is {propName;propValue}
 end
 
 if isempty(options.('start_struct'))
-    struct_path = strcat(fileparts(mfilename('fullpath')),'\mni152_2009_256.nii');
+    struct_path = strcat(fileparts(mfilename('fullpath')),[filesep 'mni152_2009_256.nii']);
 else
     struct_path = options.('start_struct');
 end
@@ -136,7 +136,7 @@ switch(option)
     case 'img'
 		struct_path = spm_select(1,'.nii');
 		if isempty(struct_path)
-            struct_path = strcat(fileparts(mfilename('fullpath')),'\mni152_2009_256.nii');
+            struct_path = strcat(fileparts(mfilename('fullpath')),[filesep 'mni152_2009_256.nii']);
         end
         struct_img = spm_read_vols(spm_vol(struct_path));
         redraw_img(false);
@@ -198,17 +198,17 @@ for i = 1:length(sli_pos_numbers)
     if isempty(pos_path),
         red_path = 0;
     else
-        red_path = strcat(fileparts(mfilename('fullpath')),'\overlay_red.nii');
+        red_path = strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_red.nii']);
     end
     if isempty(null_path),
         green_path = 0;
     else
-        green_path = strcat(fileparts(mfilename('fullpath')),'\overlay_green.nii');
+        green_path = strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_green.nii']);
     end
     if isempty(neg_path),
         blue_path = 0;
     else
-        blue_path = strcat(fileparts(mfilename('fullpath')),'\overlay_blue.nii');
+        blue_path = strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_blue.nii']);
     end
     temp_sli = slice_with_overlays(struct_path, red_path, green_path, blue_path, pos_int, null_int, neg_int, sli_direction, cell2mat(sli_pos_numbers(i)), false);
     sli_image((sli_column - 1) * sli_width + 1:sli_column * sli_width,(sli_row - 1) * sli_height + 1:sli_row * sli_height,:) = temp_sli;
@@ -486,8 +486,8 @@ if ~isempty(struct_path)
     
     
     if ~isempty(pos_path)
-        pos_background = thresh_background(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),'\background_red.nii'));	%red		
-        [pos_img, pos_overlay] = thresh(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),'\overlay_red.nii'));	%red		
+        pos_background = thresh_background(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'background_red.nii']));	%red		
+        [pos_img, pos_overlay] = thresh(pos_path,pos_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_red.nii']));	%red		
         pos_max = max(pos_img(:));
         pos_int_true = max(0, pos_max / pos_int);
         spm_orthviews('AddColouredImage',1,pos_background, [1 0 0]);
@@ -498,8 +498,8 @@ if ~isempty(struct_path)
 
 
     if ~isempty(neg_path)
-        neg_background = thresh_background(neg_path,neg_thr,strcat(fileparts(mfilename('fullpath')),'\background_blue.nii'));	%blue		
-        [neg_img, neg_overlay] = thresh(neg_path,neg_thr,strcat(fileparts(mfilename('fullpath')),'\overlay_blue.nii'));	%blue		
+        neg_background = thresh_background(neg_path,neg_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'background_blue.nii']));	%blue		
+        [neg_img, neg_overlay] = thresh(neg_path,neg_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_blue.nii']));	%blue		
         neg_max = max(neg_img(:));
         neg_int_true = max(0, neg_max / neg_int);
         spm_orthviews('AddColouredImage',1,neg_background, [0 0 1]);
@@ -510,15 +510,15 @@ if ~isempty(struct_path)
     
 
     if ~isempty(null_path)
-        null_background = thresh_background(null_path,null_thr,strcat(fileparts(mfilename('fullpath')),'\background_green.nii'));	%green		
-        [null_img, null_overlay] = thresh(null_path,null_thr,strcat(fileparts(mfilename('fullpath')),'\overlay_green.nii'));	%green
+        null_background = thresh_background(null_path,null_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'background_green.nii']));	%green		
+        [null_img, null_overlay] = thresh(null_path,null_thr,strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_green.nii']));	%green
         null_max = max(null_img(:));
         null_int_true = max(0, null_max / null_int);
         if ~isempty(pos_path)
-            [null_overlay, null_background] = clear_thresh_intersections(strcat(fileparts(mfilename('fullpath')),'\overlay_green.nii'), strcat(fileparts(mfilename('fullpath')),'\background_green.nii'), strcat(fileparts(mfilename('fullpath')),'\background_red.nii'));
+            [null_overlay, null_background] = clear_thresh_intersections(strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_green.nii']), strcat(fileparts(mfilename('fullpath')),[filesep 'background_green.nii']), strcat(fileparts(mfilename('fullpath')),[filesep 'background_red.nii']));
         end    
         if ~isempty(neg_path)
-            [null_overlay, null_background] = clear_thresh_intersections(strcat(fileparts(mfilename('fullpath')),'\overlay_green.nii'), strcat(fileparts(mfilename('fullpath')),'\background_green.nii'), strcat(fileparts(mfilename('fullpath')),'\background_blue.nii'));
+            [null_overlay, null_background] = clear_thresh_intersections(strcat(fileparts(mfilename('fullpath')),[filesep 'overlay_green.nii']), strcat(fileparts(mfilename('fullpath')),[filesep 'background_green.nii']), strcat(fileparts(mfilename('fullpath')),[filesep 'background_blue.nii']));
         end
         spm_orthviews('AddColouredImage',1,null_background, [0 0.5 0]);
         spm_orthviews('AddColouredImage',1,null_overlay, [null_int_true null_int_true 0]);
@@ -526,7 +526,7 @@ if ~isempty(struct_path)
         null_img = zeros(size(null_img));
     end    
 else
-    struct_path = strcat(fileparts(mfilename('fullpath')),'\mni152_2009_256.nii');
+    struct_path = strcat(fileparts(mfilename('fullpath')),[filesep 'mni152_2009_256.nii']);
 end
 
 st.callback = 'bayinf_coord();';
