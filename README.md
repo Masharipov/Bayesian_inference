@@ -3,9 +3,9 @@
 <p align="center"><img width="90%" src="illustrations/bayinf.png"/></p>
 
 =========================================================================
+
 When using the toolbox, please cite the following paper:
 Masharipov, R., Knyazeva, I., Nikolaev, Y., Korotkov, A., Didur, M., Cherednichenko, D., & Kireev, M. (2021). Providing Evidence for the Null Hypothesis in Functional Magnetic Resonance Imaging Using Group-Level Bayesian Inference. Frontiers in Neuroinformatics, 15. https://doi.org/10.3389/fninf.2021.738342
-
 
 =========================================================================
 
