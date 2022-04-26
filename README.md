@@ -1,4 +1,4 @@
-# Bayesian_inference
+# * * BayInf toolbox
 
 <p align="center"><img width="90%" src="illustrations/bayinf.png"/></p>
 
