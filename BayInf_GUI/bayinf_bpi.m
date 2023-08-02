@@ -33,8 +33,8 @@
 % LPO > 3 corresponds to PostProb > 95%
 % LPOs and PPMs created for
 % 1) Positive effects (effect > gamma)
-% 2) Null effects (–gamma < effect < gamma)
-% 3) Negative effects (effect < –gamma)
+% 2) Null effects (â€“gamma < effect < gamma)
+% 3) Negative effects (effect < â€“gamma)
 
 % LPO_pos:  path to LPO image for positive effect
 % LPO_null: path to LPO image for null effect
@@ -61,7 +61,7 @@ if nargin > 1
     load([path filesep 'SPM.mat']);
 else
     % Load SPM.mat
-    [spmmatfile] = spm_select(1,['^SPM' filesep '.mat$'],'Select SPM.mat');
+    [spmmatfile] = spm_select(1,['^SPM.mat$'],'Select SPM.mat');
     if isempty(spmmatfile)
         LPO_pos = '';
         LPO_null = '';
