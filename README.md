@@ -13,10 +13,25 @@ Masharipov, R., Knyazeva, I., Nikolaev, Y., Korotkov, A., Didur, M., Cheredniche
 
 Before running these scripts, use SPM12 (v6906) to:
 1) Create GLM for a one-sample or two-sample test.
-2) Estimate model using the *Classical* method.
-3) Estimate model using the *Bayesian 2nd-level* method.
+2) Estimate model using the *Classical* method:
+<p align="center"><img width="50%" src="illustrations/Estimate_Classic.JPG"/></p>
+3) Estimate model using the *Bayesian 2nd-level* method:
+<p align="center"><img width="50%" src="illustrations/Estimate_Bayes.JPG"/></p>
+4) Close SPM12.
 
-It is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC) before model estimation (for example, see 'scale_raw_betas_to_PSC.m') .
+It is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC) before model estimation (for example, see 'scale_raw_betas_to_PSC.m').
+
+=========================================================================
+
+**IMPORTANT NOTES**
+
+1) If you used a GLM for **one-sample test** and **did not get significant results** (or just **a few significant voxels**) with **voxel-level FWE-corrected threshold of 0.05**, than the **default ES threshold** (one prior SD of the contrast) **will be very small** (very narrow ROPE) and **all voxels will be labeled as "low-confidence"** (no colour in GUI).
+   
+   In such cases, you can **use an a priori defined ES threshold** based on previously reported effect sizes **or report the minimum ES threshold** at which **most of the voxels can be labeled as having ‘no difference’**, allowing the critical reader to decide whether this speaks in favor of the absence of differences. You can also calculate the **ROPE maps** in this case.
+
+3) If you get the error "Reference to non-existent field 'VCbeta', estimate the model using the *Bayesian 2nd-level* method (see Previous section).
+
+
 
 **How to Use**
 
@@ -30,7 +45,7 @@ It is recommended to scale linear contrasts of beta-values (θ = cB) to percent 
 
 =======================================================================
 
-**Bayesian parameter inference (*bayinf_bpi.m*)**
+**Bayesian Parameter Inference (*bayinf_bpi.m*)**
 
 1) Select *SPM.mat* file for one-sample or two-sample model.
 2) Select contrast.  
