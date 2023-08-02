@@ -25,7 +25,9 @@ It is recommended to scale linear contrasts of beta-values (θ = cB) to percent 
 
 **IMPORTANT NOTES**
 
-1) If you used a GLM for **one-sample test** and **did not get significant results** (or just **a few significant voxels**) with **voxel-level FWE-corrected threshold of 0.05**, than the **default ES threshold** (one prior SD of the contrast) **will be very small** (very narrow ROPE) and **all voxels will be labeled as "low-confidence"** (no colour in GUI).
+1) If you are using the latest version of **SPM12 (v7771**), **replace the spm_reml.m"** function with the old one (v6906). You can find it in this repository (**see BayInf_GUI/spm_v6906 folder**).
+
+2) If you used a GLM for **one-sample test** and **did not get significant results** (or just **a few significant voxels**) with **voxel-level FWE-corrected threshold of 0.05**, than the **default ES threshold** (one prior SD of the contrast) **will be very small** (very narrow ROPE) and **all voxels will be labeled as "low-confidence"** (no colour in GUI).
    
    In such cases, you can **use an a priori defined ES threshold** based on previously reported effect sizes **or report the minimum ES threshold** at which **most of the voxels can be labeled as having ‘no difference’**, allowing the critical reader to decide whether this speaks in favor of the absence of differences. You can also calculate the **ROPE maps** in this case.
 
