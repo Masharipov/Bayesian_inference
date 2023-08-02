@@ -19,6 +19,7 @@ Before running these scripts, use SPM12 (v6906) to:
 <p align="center"><img width="50%" src="illustrations/Estimate_Bayes.JPG"/></p>
 4) Close SPM12.
 
+
 It is recommended to scale linear contrasts of beta-values (θ = cB) to percent signal change (PSC) before model estimation (for example, see 'scale_raw_betas_to_PSC.m').
 
 =========================================================================
