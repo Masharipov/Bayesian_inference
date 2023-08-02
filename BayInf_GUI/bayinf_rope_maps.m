@@ -3,11 +3,11 @@
 % The "ROPE-only" and "HDI+ROPE" decision rules (Kruschke, 2018)
 
 % Calculating the ROPE maps based on the 'ROPE-only' or 'HDI+ROPE' rule.
-% For “(de)activated” voxels, the ROPE map contains maximum ES thresholds
-% allowing to classify voxels as “(de)activated” based on the “ROPE-only”
-% or “HDI+ROPE” decision rules.
-% For “not activated” voxels, it contains minimum effect size thresholds 
-% allowing to classify voxels as “not activated.” 
+% For â€œ(de)activatedâ€ voxels, the ROPE map contains maximum ES thresholds
+% allowing to classify voxels as â€œ(de)activatedâ€ based on the â€œROPE-onlyâ€
+% or â€œHDI+ROPEâ€ decision rules.
+% For â€œnot activatedâ€ voxels, it contains minimum effect size thresholds 
+% allowing to classify voxels as â€œnot activated.â€ 
 
 % =========================================================================
 % Before running the script use SPM12 (v6906) to:
@@ -29,7 +29,7 @@ if nargin > 1
     load([path filesep 'SPM.mat']);
 else
     % Load SPM.mat
-    [spmmatfile] = spm_select(1,['^SPM' filesep '.mat$'],'Select SPM.mat');
+    [spmmatfile] = spm_select(1,['^SPM.mat$'],'Select SPM.mat');
     if isempty(spmmatfile)
         ROPE_map_pos = '';
         ROPE_map_null = '';
